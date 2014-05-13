@@ -25,6 +25,8 @@
     AppViewController *appviewcontroller = [[AppViewController alloc] init];
     self.window.rootViewController = appviewcontroller;
     [self.window makeKeyAndVisible];
+    
+    //ssss
     return YES;
 }
 
