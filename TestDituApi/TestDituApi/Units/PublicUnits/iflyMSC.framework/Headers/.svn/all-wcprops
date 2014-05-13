@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers
+END
+IFlyDataUploader.h
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlyDataUploader.h
+END
+IFlySpeechUser.h
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlySpeechUser.h
+END
+IFlyDataDownloader.h
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlyDataDownloader.h
+END
+IFlySpeechRecognizerDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlySpeechRecognizerDelegate.h
+END
+IFlySpeechSynthesizerDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlySpeechSynthesizerDelegate.h
+END
+IFlyContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlyContact.h
+END
+IFlySetting.h
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlySetting.h
+END
+IFlyUserWords.h
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlyUserWords.h
+END
+IFlySpeechRecognizer.h
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlySpeechRecognizer.h
+END
+IFlySpeechSynthesizer.h
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlySpeechSynthesizer.h
+END
+IFlySpeechError.h
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/videoshare/!svn/ver/5759/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/iflyMSC.framework/Headers/IFlySpeechError.h
+END

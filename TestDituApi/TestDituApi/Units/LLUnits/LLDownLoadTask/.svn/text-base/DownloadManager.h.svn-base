@@ -1,0 +1,46 @@
+//
+//  DownloadManager.h
+//  xFeng4
+//
+//  Created by zc on 12-6-26.
+//  Copyright 2012 cmmobi. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "ASIHTTPRequestDelegate.h"
+#import "ASIProgressDelegate.h"
+#import "ASIHTTPRequest.h"
+#import "ASINetworkQueue.h"
+
+@interface DownloadManager : NSObject<ASIHTTPRequestDelegate,ASIProgressDelegate> {
+	
+}
+@property(strong,nonatomic)ASINetworkQueue* netWorkQueue;
+@property (nonatomic,strong) NSMutableDictionary* downloadDic;
+@property (nonatomic,strong) NSMutableDictionary* oldDownloadDic;
+@property (nonatomic,assign) long oldTime;
+@property (nonatomic,assign) NSTimer* timer;
+-(void)saveDic;
+-(NSInteger)getActived:(NSString*)name;
+-(void)setActived:(NSString*)name:(NSInteger)actived;
+-(void)setAllActived:(NSInteger)actived;
+-(void)setRecord:(NSString*)url:(NSString*)localfilePath:(NSString*)name:(NSString*)date;
+-(NSString*)findUrl:(NSString*)name;
+-(void)deleteRecord:(NSString*)name;
+-(void)setMaxLength:(NSString*)name:(long long)maxlength;
+-(void)setReceiveLength:(NSString*)name:(long long)receivelength;
+-(long long)getMaxLength:(NSString*)name;
+-(long long)getReceiveLength:(NSString*)name;
+-(BOOL)fileExist:(NSString*)url:(NSString*)localfilePath :(NSString*)name;
+-(void)continueAll;
+-(void)cleanDownloaded;
+-(void)cleanDownloadedWithVideoid:(NSString*)videoid;
+-(float)fetchProgress:(NSString*)videoid;
+-(void)download:(NSString*)url:(NSString*)localfilePath:(NSString*)name:(NSString*)date:(NSString*)imageUrl:(id)progressDelegate:(id)requestDelegate;
+-(void)deleteDownload:(NSString*)name;
+-(void)pauseAllDownloads;
+-(int)checkAlive:(NSString*)videoid;
+-(void)continueBy:(NSString*)videoid;
+-(void)pauseBy:(NSString*)videoid;
+-(int)fetchCount;
+@end

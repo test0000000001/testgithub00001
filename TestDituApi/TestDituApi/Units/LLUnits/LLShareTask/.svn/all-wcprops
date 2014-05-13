@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/videoshare/!svn/ver/9384/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask
+END
+LLShare.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/videoshare/!svn/ver/9218/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLShare.h
+END
+LLSharePublishManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/videoshare/!svn/ver/7332/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLSharePublishManager.h
+END
+LLShareTask.h
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/videoshare/!svn/ver/7617/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLShareTask.h
+END
+DiaryShareUrlData.m
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/videoshare/!svn/ver/6676/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/DiaryShareUrlData.m
+END
+LLPublish.h
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/videoshare/!svn/ver/5526/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLPublish.h
+END
+LLShare.m
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/videoshare/!svn/ver/9384/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLShare.m
+END
+LLPublishTask.h
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/videoshare/!svn/ver/5526/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLPublishTask.h
+END
+LLSharePublishManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/videoshare/!svn/ver/9132/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLSharePublishManager.m
+END
+LLShareTask.m
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/videoshare/!svn/ver/9131/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLShareTask.m
+END
+LLPublish.m
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/videoshare/!svn/ver/6368/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLPublish.m
+END
+LLPublishTask.m
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/videoshare/!svn/ver/9133/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/LLPublishTask.m
+END
+DiaryShareUrlData.h
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/videoshare/!svn/ver/6676/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLShareTask/DiaryShareUrlData.h
+END

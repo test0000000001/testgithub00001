@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/videoshare/!svn/ver/7731/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/MapWatchMode
+END
+MapWatchModeModel.h
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/videoshare/!svn/ver/5635/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/MapWatchMode/MapWatchModeModel.h
+END
+MapWatchModeViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/videoshare/!svn/ver/7709/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/MapWatchMode/MapWatchModeViewController.m
+END
+MKMapView+ZoomLevel.m
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/videoshare/!svn/ver/5610/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/MapWatchMode/MKMapView+ZoomLevel.m
+END
+MapWatchModeModel.m
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/videoshare/!svn/ver/5960/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/MapWatchMode/MapWatchModeModel.m
+END
+MapWatchModeViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/videoshare/!svn/ver/7731/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/MapWatchMode/MapWatchModeViewController.xib
+END
+MapWatchModeViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/videoshare/!svn/ver/7342/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/MapWatchMode/MapWatchModeViewController.h
+END
+MKMapView+ZoomLevel.h
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/videoshare/!svn/ver/5239/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/MapWatchMode/MKMapView+ZoomLevel.h
+END

@@ -1,0 +1,593 @@
+//
+//  DownloadManager.m
+//  xFeng4
+//
+//  Created by zc on 12-6-26.
+//  Copyright 2012 cmmobi. All rights reserved.
+//
+
+#import "DownloadManager.h"
+#import "HttpRequest.h"
+#import "DebugLog.h"
+#import "VideoShareAppDelegate.h"
+#import "UploadAndDownloadModel.h"
+
+@implementation DownloadManager
+@synthesize downloadDic=_downloadDic;
+@synthesize netWorkQueue=_netWorkQueue;
+@synthesize oldDownloadDic=_oldDownloadDic;
+@synthesize oldTime = _oldTime;
+@synthesize timer = _timer;
+-(id)init
+{
+    if (self = [super init]) {
+        self.downloadDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"DownloadPresistent"];
+        if (!_downloadDic) {
+            self.downloadDic = [[NSMutableDictionary alloc]initWithCapacity:10];
+        }
+        self.oldDownloadDic = [[NSMutableDictionary alloc] initWithCapacity:10];
+        
+        
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                      target:self
+                                                    selector:@selector(speedChecker)
+                                                    userInfo:nil
+                                                     repeats:YES];
+        self.oldTime = (long)[[NSDate date] timeIntervalSince1970];
+        
+        self.netWorkQueue = [[ASINetworkQueue alloc] init];
+        [_netWorkQueue reset];
+        [_netWorkQueue setShowAccurateProgress:YES];
+        [_netWorkQueue go];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:@"applicationWillResignActive" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginBackgroundTaskWithExpirationHandler) name:@"beginBackgroundTaskWithExpirationHandler" object:nil];
+    }
+    return self;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+-(void)saveDic
+{
+    [[NSUserDefaults standardUserDefaults] setObject:_downloadDic forKey:@"DownloadPresistent"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(NSInteger)getActived:(NSString*)name
+{
+    NSInteger result = 2;
+    if ([_downloadDic objectForKey:name]) {
+        NSMutableDictionary* dic = [_downloadDic objectForKey:name];
+        result = [[dic objectForKey:@"active"] intValue];
+    }
+    return result;
+}
+
+-(void)setActived:(NSString*)name:(NSInteger)actived
+{
+    if ([_downloadDic objectForKey:name]) {
+        NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithDictionary:[_downloadDic objectForKey:name]];
+        [dic setValue:[NSNumber numberWithInt:actived] forKey:@"active"];
+        [_downloadDic setValue:dic forKey:name];
+    }
+}
+
+-(void)setAllActived:(NSInteger)actived
+{
+    for (NSString* key in [_downloadDic allKeys]) {
+        NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithDictionary:[_downloadDic objectForKey:key]];
+        [dic setValue:[NSNumber numberWithInt:actived] forKey:@"active"];
+        [_downloadDic setValue:dic forKey:key];
+    }
+}
+
+-(void)setRecord:(NSString*)url:(NSString*)localfilePath:(NSString*)name:(NSString*)date:(NSString*)imageUrl
+{
+    NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithObjectsAndKeys:UN_NIL(url),@"url",UN_NIL(localfilePath),@"localfilePath",[NSNumber numberWithInt:1],@"active",UN_NIL(date),@"date",UN_NIL(imageUrl),@"imageurl",nil];
+    [_downloadDic setObject:dic forKey:name];
+}
+
+-(NSString*)findUrl:(NSString*)name
+{
+    NSString* result = nil;
+    NSMutableDictionary* dic = [_downloadDic objectForKey:name];
+    if (dic) {
+        result = [dic objectForKey:@"url"];
+    }
+    return result;
+}
+
+-(void)deleteRecord:(NSString*)name
+{
+    [_downloadDic removeObjectForKey:name];
+    [self saveDic];
+}
+
+-(void)setMaxLength:(NSString*)name:(long long)maxlength
+{
+    NSMutableDictionary* celldic = [_downloadDic objectForKey:name];
+    if (celldic) {
+        NSMutableDictionary* tmpcell = [[NSMutableDictionary alloc]initWithDictionary:celldic];
+        [tmpcell setObject:[NSNumber numberWithLongLong:maxlength ] forKey:@"maxlength"];
+        [_downloadDic setObject:tmpcell forKey:name];
+    }
+}
+
+-(void)setReceiveLength:(NSString*)name:(long long)receivelength
+{
+    NSMutableDictionary* celldic = [_downloadDic objectForKey:name];
+    if (celldic) {
+        NSMutableDictionary* tmpcell = [[NSMutableDictionary alloc]initWithDictionary:celldic];
+        [tmpcell setObject:[NSNumber numberWithLongLong:receivelength ] forKey:@"receivelength"];
+        [_downloadDic setObject:tmpcell forKey:name];
+    }
+}
+
+-(long long)getMaxLength:(NSString*)name
+{
+    long long result = 0;
+    NSMutableDictionary* celldic = [_downloadDic objectForKey:name];
+    if (celldic) {
+        result = [[celldic objectForKey:@"maxlength"] longLongValue];
+    }
+    return result;
+}
+
+-(long long)getReceiveLength:(NSString*)name
+{
+    long long result = 0;
+    NSMutableDictionary* celldic = [_downloadDic objectForKey:name];
+    if (celldic) {
+        result = [[celldic objectForKey:@"receivelength"] longLongValue];
+    }
+    return result;
+}
+
+-(BOOL)fileExist:(NSString*)url:(NSString*)localfilePath :(NSString*)name
+{
+    BOOL fileExists = NO;
+    NSString* savePath = [[localfilePath stringByAppendingPathComponent:name] stringByAppendingPathExtension:[url pathExtension]];
+    
+    NSString *tempPath = [savePath stringByAppendingPathExtension:@"ASItmp"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:savePath]||[fileManager fileExistsAtPath:tempPath]) {
+        fileExists=YES;
+    };
+    
+    return fileExists;
+}
+
+
+#pragma mark -
+#pragma mark ASIHTTPRequestDelegate method
+//ASIHTTPRequestDelegate,下载之前获取信息的方法,主要获取下载内容的大小，可以显示下载进度多少字节
+- (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders {
+	debug_NSLog(@"didReceiveResponseHeaders-%@",[responseHeaders valueForKey:@"Content-Length"]);
+    debug_NSLog(@"contentlength=%llu",request.contentLength);
+    [self saveDic];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    debug_NSLog(@"requestFailed");
+    
+    int state = 0;
+    NSString* videoid = [[request.userInfo objectForKey:@"ASI_netWorkQueue_name"] description];
+    long long length= [self getReceiveLength:videoid];
+    long long maxlength = [self getMaxLength:videoid];
+    NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:videoid,@"videoid",[NSNumber numberWithInt:state] ,@"state",[NSNumber numberWithLongLong:length] ,@"length",[NSNumber numberWithLongLong:maxlength] ,@"maxlength",nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadStateChange" object:self userInfo:userInfo];
+    [self saveDic];
+}
+
+//ASIHTTPRequestDelegate,下载完成时,执行的方法
+- (void)requestFinished:(ASIHTTPRequest *)request {
+    
+    NSString* name = [[request.userInfo objectForKey:@"ASI_netWorkQueue_name"] description];
+    debug_NSLog(@"download finished:%@",name);
+    [APP_DELEGATE.tools.downloadManager deleteRecord:name];
+    
+    
+    NSString* videoid = [[request.userInfo objectForKey:@"ASI_netWorkQueue_name"] description];
+    long long length=0;
+    long long maxlength = 0;
+    int state = 2;
+    
+    [self saveDic];
+    NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:videoid,@"videoid",[NSNumber numberWithInt:state] ,@"state",[NSNumber numberWithLongLong:length] ,@"length",[NSNumber numberWithLongLong:maxlength] ,@"maxlength",nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadStateChange" object:self userInfo:userInfo];
+    
+}
+
+- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
+{
+    NSString* videoid = [[request.userInfo objectForKey:@"ASI_netWorkQueue_name"] description];
+    //NSLog(@"downloading videoid = %@",videoid);
+    long long length=bytes+[self getReceiveLength:videoid];
+    [self setReceiveLength:videoid :length];
+    long long maxlength = [self getMaxLength:videoid];
+    [self setActived:videoid :1];
+    int state = 1;
+    
+    NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:videoid,@"videoid",[NSNumber numberWithInt:state] ,@"state",[NSNumber numberWithLongLong:length] ,@"length",[NSNumber numberWithLongLong:maxlength] ,@"maxlength",nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadStateChange" object:self userInfo:userInfo];
+}
+
+- (void)request:(ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength
+{
+    NSString* videoid = [[request.userInfo objectForKey:@"ASI_netWorkQueue_name"] description];
+    long long length=[self getReceiveLength:videoid];
+    long long maxlength = [self getMaxLength:videoid];
+    if(maxlength<=0)
+    {
+        [self setMaxLength:videoid :newLength];
+        maxlength=newLength;
+    }
+    int state = 1;
+    
+    [self saveDic];
+    
+    NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:videoid,@"videoid",[NSNumber numberWithInt:state] ,@"state",[NSNumber numberWithLongLong:length] ,@"length",[NSNumber numberWithLongLong:maxlength] ,@"maxlength",nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadStateChange" object:self userInfo:userInfo];
+}
+
+//-(void)applicationWillResignActive//所有状态设置为暂停
+//{
+    //    [APP_DELEGATE.tools pauseAllDownloads];
+    //    
+    //    for (NSString* key in [_downloadDic allKeys]) {
+    //        NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithDictionary:[_downloadDic objectForKey:key]];
+    //        [dic setValue:[NSNumber numberWithInt:0] forKey:@"active"];
+    //        [_downloadDic setValue:dic forKey:key];
+    //        
+    //        NSString* videoid = key;
+    //        long long length=[self getReceiveLength:videoid];
+    //        long long maxlength = [self getMaxLength:videoid];
+    //        int state = 0;
+    //        
+    //        NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:videoid,@"videoid",[NSNumber numberWithInt:state] ,@"state",[NSNumber numberWithLongLong:length] ,@"length",[NSNumber numberWithLongLong:maxlength] ,@"maxlength",nil];
+    //        [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadStateChange" object:self userInfo:userInfo];
+    //    }
+    //    
+    //    [self saveDic];
+//}
+
+-(void)applicationWillResignActive//所有正在下载中的backgroundactive
+{
+    for (NSString* key in [_downloadDic allKeys]) {
+        NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithDictionary:[_downloadDic objectForKey:key]];
+        if ([[dic objectForKey:@"active"]intValue]==1) {
+            [dic setValue:@"" forKey:@"backgroundactive"];
+        }
+        [_downloadDic setValue:dic forKey:key];
+    }
+    NSLog(@"downloadManager applicationWillResignActive");
+    [self saveDic];
+}
+
+
+-(void)beginBackgroundTaskWithExpirationHandler//所有状态设置为暂停
+{
+    [APP_DELEGATE.tools.downloadManager pauseAllDownloads];
+    
+    for (NSString* key in [_downloadDic allKeys]) {
+        NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithDictionary:[_downloadDic objectForKey:key]];
+        //[dic setValue:[NSNumber numberWithInt:0] forKey:@"active"];
+        [_downloadDic setValue:dic forKey:key];
+        
+        NSString* videoid = key;
+        long long length=[self getReceiveLength:videoid];
+        long long maxlength = [self getMaxLength:videoid];
+        int state = 0;
+        
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:videoid,@"videoid",[NSNumber numberWithInt:state] ,@"state",[NSNumber numberWithLongLong:length] ,@"length",[NSNumber numberWithLongLong:maxlength] ,@"maxlength",nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadStateChange" object:self userInfo:userInfo];
+    }
+    
+    [self saveDic];
+}
+
+
+-(void)continueAll
+{
+    for (NSString* key in [_downloadDic allKeys]) {
+        [self continueBy:key];
+    }
+}
+
+-(void)continueBy:(NSString*)videoid
+{
+    NSDictionary* dic = [_downloadDic objectForKey:UN_NIL(videoid)];
+    if(dic)
+    {
+        if ([self getActived:videoid] == 1) {
+            NSString* url = [dic objectForKey:@"url"];
+            NSString* localfilePath = [dic objectForKey:@"localfilePath"];
+            NSString* date = [dic objectForKey:@"date"];
+            NSString* imageUrl = [dic objectForKey:@"imageurl"];
+            if (!STR_IS_NIL(url) && !STR_IS_NIL(localfilePath)) {
+                int exsit = 0;
+                for (ASIHTTPRequest *request in [_netWorkQueue operations]) {
+                    NSString* tmpname = [[request.userInfo objectForKey:@"ASI_netWorkQueue_name"] description];
+                    if (!STR_IS_NIL(tmpname)&& [tmpname isEqualToString:videoid]) {
+                        exsit = 1;
+                        if (request.inProgress == NO) {
+                            [request start];
+                        }
+                    }
+                }
+                if (exsit==0) {
+                    [self download:url:localfilePath:videoid:date:imageUrl:self:self];
+                }
+            }
+        }
+        
+    } 
+}
+
+
+-(void)cleanDownloaded
+{
+    //清除所有缓存视频包括正在现在的视频内容
+    /*[self pauseAllDownloads];
+    [_downloadDic removeAllObjects];
+    [self saveDic];
+    [[NSFileManager defaultManager] removeItemAtPath:VIDEO_DOWNLOAD_PATH error:nil];
+    NSError *error;
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:VIDEO_DOWNLOAD_PATH withIntermediateDirectories:YES attributes:nil error:&error]) {
+        debug_NSLog(@"%@",[error localizedDescription]);
+    };*/
+    //清除所有缓存视频不包括正在现在的视频内容
+    /*UploadAndDownloadModel* uploadAndDownloadModel = [[UploadAndDownloadModel alloc] init];
+    [uploadAndDownloadModel fetchDownloadedListData];
+    if([[uploadAndDownloadModel downloadedList] count] > 0){
+        int count = [[uploadAndDownloadModel downloadedList] count];
+        for(int index = 0; index < count; index++){ //
+            DownloadedCell* cell = [[uploadAndDownloadModel downloadedList]  objectAtIndex:0];
+            if (!STR_IS_NIL(cell.videoid)) {
+                [[NSFileManager defaultManager] removeItemAtPath:[VIDEO_DOWNLOAD_PATH stringByAppendingPathComponent:cell.videoid] error:nil];
+                [[uploadAndDownloadModel downloadedList]  removeObjectAtIndex:0];
+            }
+        }
+    }*/
+    
+    
+    NSArray *contentOfFolder = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:VIDEO_DOWNLOAD_PATH error:NULL];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    for (NSString *aPath in contentOfFolder) {
+        
+        NSString * fullPath = [VIDEO_DOWNLOAD_PATH stringByAppendingPathComponent:aPath];
+        BOOL isDir;
+        if ([manager fileExistsAtPath:fullPath isDirectory:&isDir] && isDir)
+        {
+            NSString* filename=@"";
+            
+            NSDirectoryEnumerator *direnum = [manager enumeratorAtPath:fullPath];
+            int flagUnfinished = 0;
+            while (filename = [direnum nextObject]) {
+                if ([[filename pathExtension] caseInsensitiveCompare:@"ASItmp"]==NSOrderedSame)
+                {
+                    //未下载完成的,跳过
+                    flagUnfinished = 1;
+                    break;
+                }
+            }
+            if (flagUnfinished==0) {
+                //删除文件
+                [[NSFileManager defaultManager] removeItemAtPath:fullPath error:nil];
+            }
+        }
+    }
+    
+}
+
+-(void)cleanDownloadedWithVideoid:(NSString*)videoid
+{
+    //后缀不为ASItmp
+    NSArray *contentOfFolder = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:VIDEO_DOWNLOAD_PATH error:NULL];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    for (NSString *aPath in contentOfFolder) {
+        
+        NSString * fullPath = [VIDEO_DOWNLOAD_PATH stringByAppendingPathComponent:aPath];
+        BOOL isDir;
+        if ([manager fileExistsAtPath:fullPath isDirectory:&isDir] && isDir && [aPath isEqualToString:videoid])
+        {
+            NSString* filename=@"";
+            
+            NSDirectoryEnumerator *direnum = [manager enumeratorAtPath:fullPath];
+            int flagUnfinished = 0;
+            while (filename = [direnum nextObject]) {
+                if ([[filename pathExtension] caseInsensitiveCompare:@"ASItmp"]==NSOrderedSame)
+                {
+                    //未下载完成的,跳过
+                    flagUnfinished = 1;
+                    break;
+                }
+            }
+            if (flagUnfinished==0) {
+                //删除文件
+                [[NSFileManager defaultManager] removeItemAtPath:fullPath error:nil];
+            }
+            break;
+        }
+    }
+}
+
+-(float)fetchProgress:(NSString*)videoid
+{
+    float result = 0.0f;
+    for (NSString* key in [_downloadDic allKeys]) {
+        if ([key isEqualToString:videoid]) {
+            NSDictionary* dic = [_downloadDic objectForKey:key];
+            NSNumber* maxlength = [dic objectForKey:@"maxlength"];
+            NSNumber* receivelength = [dic objectForKey:@"receivelength"];
+            if(maxlength && receivelength)
+            {
+                long long max = [maxlength longLongValue];
+                long long len = [receivelength longLongValue];
+                if (len >= 0) {
+                    result = (float)len/max;
+                }
+            }
+        }
+    }
+    return result;
+}
+
+-(void)download:(NSString*)url:(NSString*)localfilePath:(NSString*)name:(NSString*)date:(NSString*)imageUrl:(id)progressDelegate:(id)requestDelegate
+{
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	//判断temp文件夹是否存在
+	BOOL fileExists = [fileManager fileExistsAtPath:localfilePath];
+	if (!fileExists) {//如果不存在说创建,因为下载时,不会自动创建文件夹
+		[fileManager createDirectoryAtPath:localfilePath
+               withIntermediateDirectories:YES
+                                attributes:nil
+                                     error:nil];
+    }
+    
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[[NSURL alloc] initWithString:url]];
+    request.delegate = requestDelegate;
+    
+    NSString* savePath = [[localfilePath stringByAppendingPathComponent:name] stringByAppendingPathExtension:[url pathExtension]];
+    
+    NSString *tempPath = [savePath stringByAppendingPathExtension:@"ASItmp"];
+    
+    debug_NSLog(@"savePath=%@",savePath);
+    debug_NSLog(@"tempPath=%@",tempPath);
+    
+    //设置文件保存路径
+    [request setDownloadDestinationPath:savePath];
+    //设置临时文件路径
+	[request setTemporaryFileDownloadPath:tempPath];
+    
+    //设置进度条的代理,
+	[request setDownloadProgressDelegate:progressDelegate];
+    
+    
+    [request setShowAccurateProgress:YES];
+    
+    //设置是是否支持断点下载
+    [request setAllowResumeForFileDownloads:YES];
+    
+    [request setShouldContinueWhenAppEntersBackground:YES];
+    
+    //设置基本信息
+	[request setUserInfo:[NSMutableDictionary dictionaryWithObjectsAndKeys:name,@"ASI_netWorkQueue_name",nil]];
+    
+    debug_NSLog(@"UserInfo=%@",request.userInfo);
+    
+    //添加到ASINetworkQueue队列去下载
+	[_netWorkQueue addOperation:request];
+    
+    [self setRecord:url :localfilePath :name:date:imageUrl];
+}
+
+-(void)deleteDownload:(NSString*)name
+{
+    for (ASIHTTPRequest *request in [_netWorkQueue operations]) {
+        NSString* tmpname = [[request.userInfo objectForKey:@"ASI_netWorkQueue_name"] description];//查看userinfo信息
+        if ([tmpname isEqualToString: name]) {//判断ID是否匹配
+            //暂停匹配对象
+            [request clearDelegatesAndCancel];
+        }
+    }
+    [self deleteRecord:name];
+    //删除文件
+    [[NSFileManager defaultManager] removeItemAtPath:[VIDEO_DOWNLOAD_PATH stringByAppendingPathComponent:name] error:nil];
+}
+
+-(void)pauseAllDownloads
+{
+    for (NSString* key in [_downloadDic allKeys]) {
+        [self pauseBy:key];
+    }
+}
+
+-(void)pauseBy:(NSString*)videoid
+{
+    if (!STR_IS_NIL(videoid)) {
+        for (ASIHTTPRequest *request in [_netWorkQueue operations]) {
+            if ([UN_NIL([request.userInfo objectForKey:@"ASI_netWorkQueue_name"]) isEqualToString:videoid]) {
+                [request clearDelegatesAndCancel];
+                int state = 0;
+                NSString* videoid = [[request.userInfo objectForKey:@"ASI_netWorkQueue_name"] description];
+                long long length= [self getReceiveLength:videoid];
+                long long maxlength = [self getMaxLength:videoid];
+                NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:videoid,@"videoid",[NSNumber numberWithInt:state] ,@"state",[NSNumber numberWithLongLong:length] ,@"length",[NSNumber numberWithLongLong:maxlength] ,@"maxlength",nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadStateChange" object:self userInfo:userInfo];
+                break;
+            }
+        }
+    }
+}
+
+-(int)checkAlive:(NSString*)videoid
+{
+    int result = 0;
+    if (!STR_IS_NIL(videoid)) {
+        for (ASIHTTPRequest *request in [_netWorkQueue operations]) {
+            if ([UN_NIL([request.userInfo objectForKey:@"ASI_netWorkQueue_name"]) isEqualToString:videoid]) {
+                result = 1;
+                break;
+            }
+        }
+    }
+    return result;
+}
+
+
+-(void)speedChecker
+{
+    NSMutableDictionary* speedDic = [[NSMutableDictionary alloc] initWithCapacity:10];
+    for (NSString* key in [_downloadDic allKeys]) {
+        if ([self checkAlive:key] == 1) {
+            NSDictionary* dicOld = [_oldDownloadDic objectForKey:key];
+            if (dicOld) {
+                NSNumber* lo = [dicOld objectForKey:@"receivelength"];
+                if (lo) {
+                    long long lengthOld = [lo longLongValue];
+                    NSDictionary* dic = [_downloadDic objectForKey:key];
+                    if (dic) {
+                        NSNumber* l = [dic objectForKey:@"receivelength"];
+                        if (l) {
+                            long long length = [l longLongValue];
+                            long long increase = length - lengthOld;
+                            if (increase < 0)
+                            {
+                                increase = 0;
+                            }
+                            long nowTime = (long)[[NSDate date] timeIntervalSince1970];
+                            long timePast = (nowTime - _oldTime);
+                            if (timePast > 0) {
+                                int speed = increase / timePast / 1024;
+                                [speedDic setObject:[NSString stringWithFormat:@"%d",speed] forKey:key];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if ([speedDic allKeys] > 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadSpeedBroadcast" object:self userInfo:speedDic];
+        self.oldTime = (long)[[NSDate date] timeIntervalSince1970];
+        [_oldDownloadDic removeAllObjects];
+        self.oldDownloadDic = [[NSMutableDictionary alloc] initWithDictionary:_downloadDic];
+        [self saveDic];
+    }
+    
+}
+
+-(int)fetchCount
+{
+    return [[_downloadDic allKeys] count];
+}
+
+
+@end

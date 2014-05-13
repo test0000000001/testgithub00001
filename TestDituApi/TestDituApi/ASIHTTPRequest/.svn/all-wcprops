@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/videoshare/!svn/ver/7671/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest
+END
+ASIHTTPRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIHTTPRequest.m
+END
+ASINetworkQueue.h
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASINetworkQueue.h
+END
+ASICacheDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASICacheDelegate.h
+END
+ASIProgressDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIProgressDelegate.h
+END
+ASIAuthenticationDialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIAuthenticationDialog.h
+END
+ASIDataDecompressor.h
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIDataDecompressor.h
+END
+ASIDownloadCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIDownloadCache.m
+END
+Reachability.h
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/Reachability.h
+END
+ASINetworkQueue.m
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASINetworkQueue.m
+END
+ASIAuthenticationDialog.m
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIAuthenticationDialog.m
+END
+ASIDataDecompressor.m
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIDataDecompressor.m
+END
+ASIFormDataRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIFormDataRequest.h
+END
+Reachability.m
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/Reachability.m
+END
+ASIFormDataRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIFormDataRequest.m
+END
+ASIInputStream.h
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIInputStream.h
+END
+ASIHTTPRequestConfig.h
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIHTTPRequestConfig.h
+END
+ASIInputStream.m
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIInputStream.m
+END
+ASIHTTPRequestDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIHTTPRequestDelegate.h
+END
+ASIDataCompressor.h
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIDataCompressor.h
+END
+ASIHTTPRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIHTTPRequest.h
+END
+ASIDownloadCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIDownloadCache.h
+END
+ASIDataCompressor.m
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/videoshare/!svn/ver/4535/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/ASIDataCompressor.m
+END
+DebugLog.h
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/videoshare/!svn/ver/5128/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/ASIHTTPRequest/DebugLog.h
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/videoshare/!svn/ver/9336/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLTaskManager
+END
+LLTaskBase.m
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/videoshare/!svn/ver/5801/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLTaskManager/LLTaskBase.m
+END
+LLTaskManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/videoshare/!svn/ver/9336/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLTaskManager/LLTaskManager.m
+END
+LLFreeTaskManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/videoshare/!svn/ver/9164/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLTaskManager/LLFreeTaskManager.m
+END
+LLTaskBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/videoshare/!svn/ver/5801/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLTaskManager/LLTaskBase.h
+END
+LLTaskManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/videoshare/!svn/ver/6861/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLTaskManager/LLTaskManager.h
+END
+LLFreeTaskManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/videoshare/!svn/ver/6346/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/LLUnits/LLTaskManager/LLFreeTaskManager.h
+END

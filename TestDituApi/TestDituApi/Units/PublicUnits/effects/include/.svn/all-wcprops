@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/videoshare/!svn/ver/9436/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include
+END
+effects_define.h
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/videoshare/!svn/ver/8366/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/effects_define.h
+END
+EffectsControllor.h
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/videoshare/!svn/ver/8185/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/EffectsControllor.h
+END
+ToolsUnite.h
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/videoshare/!svn/ver/8990/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/ToolsUnite.h
+END
+XAVPlayerManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/videoshare/!svn/ver/4730/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/XAVPlayerManager.h
+END
+mp4box.h
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/videoshare/!svn/ver/5446/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/mp4box.h
+END
+XAVPlayer.h
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/videoshare/!svn/ver/5362/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/XAVPlayer.h
+END
+AudioRecoderUseApi.h
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/videoshare/!svn/ver/7488/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/AudioRecoderUseApi.h
+END
+VideoPreviewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/videoshare/!svn/ver/9095/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/VideoPreviewController.h
+END
+transcodeDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/videoshare/!svn/ver/5902/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/transcodeDelegate.h
+END
+ef_ios_define.h
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/videoshare/!svn/ver/8163/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/ef_ios_define.h
+END
+recoderDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/videoshare/!svn/ver/5532/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/recoderDelegate.h
+END
+effects_file.h
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/videoshare/!svn/ver/4730/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/effects_file.h
+END
+EfAVWriter.h
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/videoshare/!svn/ver/8163/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/EfAVWriter.h
+END
+PhotoEngine.h
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/videoshare/!svn/ver/5446/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/PhotoEngine.h
+END
+XPlayerDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/videoshare/!svn/ver/9356/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/XPlayerDelegate.h
+END
+RosyWriterVideoProcessor.h
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/videoshare/!svn/ver/9095/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/RosyWriterVideoProcessor.h
+END
+mp42pcm.h
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/videoshare/!svn/ver/5902/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/mp42pcm.h
+END
+VideoGLView.h
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/videoshare/!svn/ver/6460/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/VideoGLView.h
+END
+version.h
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/videoshare/!svn/ver/9436/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/version.h
+END
+XVideoWriterManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/videoshare/!svn/ver/8990/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/XVideoWriterManager.h
+END
+RosyWriterViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/videoshare/!svn/ver/5054/client/ios/VideoShare3/VideoShare/VideoShare/Classes/Units/PublicUnits/effects/include/RosyWriterViewController.h
+END
