@@ -27,6 +27,7 @@
     [self.window makeKeyAndVisible];
     
     //ssss
+    // 5.14 9:58
     return YES;
 }
 
