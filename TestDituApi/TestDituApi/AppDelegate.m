@@ -26,6 +26,8 @@
     self.window.rootViewController = appviewcontroller;
     [self.window makeKeyAndVisible];
     
+    self.window = nil;
+    
     //ssss
     // 5.14 9:58
     return YES;
